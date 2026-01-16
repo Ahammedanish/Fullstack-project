@@ -1,100 +1,140 @@
-/* =========================
-   GLOBAL RESET
-========================= */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* =========================
-   HOME SECTION
-========================= */
-.home {
+/* Full screen background */
+.home-hero {
   min-height: 100vh;
-  width: 100%;
+  background-image: linear-gradient(
+      rgba(0, 0, 0, 0.55),
+      rgba(0, 0, 0, 0.55)
+    ),
+    url("./bckk.jpg");
 
-  /* Background Image */
-  background-image: url("./bckk.jpg");
-  background-size: cover;          /* fits image properly */
-  background-position: center top; /* best focus for your image */
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
-
-  /* Navbar space */
-  padding-top: 70px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* =========================
-   OVERLAY BOX
-========================= */
-.home-overlay {
-  background: rgba(0, 0, 0, 0.6);
-  padding: 40px 50px;
-  border-radius: 14px;
+/* Center card */
+.hero-content {
+  background: rgba(0, 0, 0, 0.65);
+  padding: 40px 60px;
+  border-radius: 12px;
   text-align: center;
-  color: #ffffff;
-  max-width: 650px;
-  backdrop-filter: blur(4px);
+  color: white;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
 }
 
-/* =========================
-   TEXT STYLES
-========================= */
-.home-overlay h1 {
-  font-size: 3rem;
-  margin-bottom: 12px;
-  font-weight: bold;
+/* Heading */
+.hero-content h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
 }
 
-.home-overlay p {
-  font-size: 1.2rem;
+/* Sub text */
+.hero-content p {
+  font-size: 18px;
   margin-bottom: 25px;
-  color: #f1f1f1;
 }
 
-/* =========================
-   BUTTON
-========================= */
-.home-overlay button {
-  padding: 12px 30px;
-  font-size: 1rem;
+/* Explore button */
+.explore-btn {
+  background-color: #ff9800;
   border: none;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
   border-radius: 8px;
   cursor: pointer;
-  background-color: #ff9800;
-  color: #000;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  transition: 0.3s ease;
 }
 
-.home-overlay button:hover {
-  background-color: #e68900;
+.explore-btn:hover {
+  background-color: #ffc107;
   transform: scale(1.05);
 }
 
-/* =========================
-   RESPONSIVE (MOBILE)
-========================= */
-@media (max-width: 768px) {
-  .home {
-    background-position: center;
-    padding-top: 60px;
-  }
+/* Popup styles */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
 
-  .home-overlay {
-    padding: 30px 20px;
-    margin: 0 15px;
-  }
+.popup-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
 
-  .home-overlay h1 {
-    font-size: 2rem;
-  }
+.popup-content h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
 
-  .home-overlay p {
-    font-size: 1rem;
-  }
+.popup-content p {
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.popup-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.popup-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.popup-buttons button:first-child {
+  background-color: #007bff;
+  color: white;
+}
+
+.popup-buttons button:first-child:hover {
+  background-color: #0056b3;
+}
+
+.popup-buttons button:last-child {
+  background-color: #28a745;
+  color: white;
+}
+
+.popup-buttons button:last-child:hover {
+  background-color: #1e7e34;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+}
+
+.close-btn:hover {
+  color: #333;
 }

@@ -11,4 +11,23 @@
     margin-left: 15px;
     text-decoration: none;
   }
+
+  .navbar span {
+    color: white;
+    margin-left: 15px;
+  }
+
+  .logout-btn {
+    background: #ff4444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-left: 15px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .logout-btn:hover {
+    background: #cc0000;
+  }
   

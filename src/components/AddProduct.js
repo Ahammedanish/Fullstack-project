@@ -1,35 +1,70 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/AddProduct.css";
 
 function AddProduct() {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState(null);
+  const [description, setDescription] = useState("");
+  const [location, setLocation] = useState("");
+  const [image, setImage] = useState("");
+  const navigate = useNavigate();
 
-  // handle image upload
-  const handleImage = (e) => {
+  useEffect(() => {
+    // Check if user is logged in
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn !== "true") {
+      navigate("/login", { state: { from: "/add-product" } });
+      return;
+    }
+  }, [navigate]);
+
+  // convert image to base64
+  const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    setImage(file);
-    setPreview(URL.createObjectURL(file));
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newProduct = {
+    if (!title || !price || !location || !image) {
+      alert("Please fill all fields and upload image");
+      return;
+    }
+
+    const existing = JSON.parse(localStorage.getItem("rentals")) || [];
+    const currentUser = JSON.parse(localStorage.getItem("currentUser")) || { name: "Admin" };
+
+    const newRental = {
+      id: Date.now(),
       title,
       price,
-      image
+      description,
+      location,
+      image,
+      postedBy: currentUser.name,
+      postedDate: new Date().toLocaleDateString(),
     };
 
-    console.log("Product Added:", newProduct);
+    localStorage.setItem(
+      "rentals",
+      JSON.stringify([...existing, newRental])
+    );
+
     alert("Product added successfully!");
+    navigate(`/product/${newRental.id}`);
   };
 
   return (
     <div className="add-product">
-      <h2>Add Rental Product</h2>
+      <h2>Add Rental</h2>
 
       <form onSubmit={handleSubmit}>
         <input
@@ -37,28 +72,46 @@ function AddProduct() {
           placeholder="Product Name"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          required
+        />
+
+        <input
+          type="number"
+          placeholder="Price per day"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
         />
 
         <input
           type="text"
-          placeholder="Price (₹)"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          required
+          placeholder="Location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
         />
 
-        {/* Image Upload Space */}
-        <label className="upload-box">
-          {preview ? (
-            <img src={preview} alt="preview" />
-          ) : (
-            <span>Click to upload product image</span>
-          )}
-          <input type="file" accept="image/*" onChange={handleImage} hidden />
-        </label>
+        <textarea
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          rows="4"
+        />
 
-        <button type="submit">Add Product</button>
+        {/* IMAGE UPLOAD */}
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+        />
+
+        {/* IMAGE PREVIEW */}
+        {image && (
+          <img
+            src={image}
+            alt="Preview"
+            className="preview-image"
+          />
+        )}
+
+        <button type="submit">Add</button>
       </form>
     </div>
   );

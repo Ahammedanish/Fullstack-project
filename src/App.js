@@ -9,19 +9,19 @@ import MyBookings from "./components/MyBookings";
 import Profile from "./components/Profile";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import ProductDetail from "./components/ProductDetail";
 
 import "./App.css";
 
 function App() {
   return (
     <Router>
-      {/* Navbar visible on all pages */}
       <Navbar />
 
-      {/* Page Routes */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/rentals" element={<Listings />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/add-product" element={<AddProduct />} />
         <Route path="/bookings" element={<MyBookings />} />
         <Route path="/profile" element={<Profile />} />
