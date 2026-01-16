@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../styles/listings.css";
 
@@ -7,6 +7,16 @@ function ProductDetail() {
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const checkLogin = () => {
+      setIsLoggedIn(localStorage.getItem("isLoggedIn") === "true");
+    };
+    checkLogin();
+    window.addEventListener('authChange', checkLogin);
+    return () => window.removeEventListener('authChange', checkLogin);
+  }, []);
 
   const rentals = JSON.parse(localStorage.getItem("rentals")) || [];
   const product = rentals.find(item => item.id === parseInt(id));
@@ -72,6 +82,7 @@ function ProductDetail() {
 
           <div className="booking-section">
             <h3>Book this item</h3>
+            {!isLoggedIn && <p style={{color: 'red'}}>Please login to book this product.</p>}
             <label>From:</label>
             <input
               type="date"
